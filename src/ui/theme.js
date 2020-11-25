@@ -85,6 +85,16 @@ export default createMuiTheme({
     }
   },
   overrides: {
+    //chagen class for MuiFormControlLabel-label
+    MuiFormControlLabel: {
+      label: {
+        color: arcBlue,
+        fontWeight: 700
+      },
+      labelPlacementStart: {
+        marginLeft: 0
+      }
+    },
     MuiInputLabel: {
       root: {
         color: arcBlue,
