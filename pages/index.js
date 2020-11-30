@@ -31,7 +31,11 @@ export default function ProjectManager() {
   const [iOSChecked, setIOSChecked] = useState(false);
   const [androidChecked, setAndroidChecked] = useState(false);
   const [softwareChecked, setSoftwareChecked] = useState(false);
-  const [rows, setRows] = useState([createData("Tom", "11/2/19", "Websote", "E-commerce", "N/A", "N/A", "N/A", "$1500")])
+  const [rows, setRows] = useState([
+    createData("Ulon Mask", "11/2/19", "Websote", "E-commerce", "N/A", "N/A", "N/A", "$1500"),
+    createData("Gill Gates", "10/17/19", "Costom Software", "GPS, Push Notification, Users/Authentication, Filetransfer", "Medium","Web Application", "0-10", "$1600"),
+    createData("Ateve Jobs", "2/3/19", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500"),
+  ])
   
   return (
     <Grid container direction="column">
@@ -105,30 +109,33 @@ export default function ProjectManager() {
           <FilterListIcon color="secondary" style={{ fontSize: 50 }} />
         </Grid>
       </Grid>
-      <Grid item>
-        <TableContainer component={Paper}>
+      <Grid item style={{ marginBottom: "15em"}}>
+        <TableContainer component={Paper} elevation={0}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
+                <TableCell align="center">
                   Name
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   Date
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   Service
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   Features
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   Complexity
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   Platforms
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
+                  Users
+                </TableCell>
+                <TableCell align="center">
                   Total
                 </TableCell>
               </TableRow>
@@ -136,14 +143,14 @@ export default function ProjectManager() {
             <TableBody>
               {rows.map((row, index) => 
               <TableRow key={index}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.service}</TableCell>
-                <TableCell>{row.features}</TableCell>
-                <TableCell>{row.complexity}</TableCell>
-                <TableCell>{row.platforms}</TableCell>
-                <TableCell>{row.users}</TableCell>
-                <TableCell>{row.total}</TableCell>
+                <TableCell align="center">{row.name}</TableCell>
+                <TableCell align="center">{row.date}</TableCell>
+                <TableCell align="center">{row.service}</TableCell>
+                <TableCell align="center" style={{ maxWidth: "5em"}}>{row.features}</TableCell>
+                <TableCell align="center">{row.complexity}</TableCell>
+                <TableCell align="center">{row.platforms}</TableCell>
+                <TableCell align="center">{row.users}</TableCell>
+                <TableCell align="center">{row.total}</TableCell>
               </TableRow>)}
             </TableBody>
           </Table>
