@@ -16,6 +16,11 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Paper from '@material-ui/core/Paper';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersContext } from '@material-ui/pickers';
 
 const useStyles = makeStyles(theme => ({}));
 
@@ -31,6 +36,10 @@ export default function ProjectManager() {
   const [iOSChecked, setIOSChecked] = useState(false);
   const [androidChecked, setAndroidChecked] = useState(false);
   const [softwareChecked, setSoftwareChecked] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [date, setDate] = useState(new Date());
+
   const [rows, setRows] = useState([
     createData("Ulon Mask", "11/2/19", "Websote", "E-commerce", "N/A", "N/A", "N/A", "$1500"),
     createData("Gill Gates", "10/17/19", "Costom Software", "GPS, Push Notification, Users/Authentication, Filetransfer", "Medium","Web Application", "0-10", "$1600"),
@@ -38,6 +47,7 @@ export default function ProjectManager() {
   ])
   
   return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Grid container direction="column">
       <Grid item style={{ marginTop: "2em", marginLeft: "5em"}}>
         <Typography variant="h1">Projects</Typography>
@@ -48,7 +58,7 @@ export default function ProjectManager() {
           style={{ width: "35em", marginLeft: "5em"}} 
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position="end" onClick={() => setDialogOpen(true)} style={{ cursor: "pointer" }}>
                 <AddIcon color="primary" style={{ fontSize: 30 }} />
               </InputAdornment>
              )
@@ -156,7 +166,31 @@ export default function ProjectManager() {
           </Table>
         </TableContainer>
       </Grid>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <Grid container justify="center">
+          <Grid item>
+            <Typography variant="h1" gutterBottom>
+              Add a new project
+            </Typography>
+          </Grid>
+        </Grid>
+        <DialogContent>
+          <Grid container>
+            <Grid item container direction="column">
+              <Grid item>
+                <TextField label="Name" id="name" value={name} onChange={(event) => setName(event.targetvalue)} />
+              </Grid>
+            </Grid>
+            <Grid item container direction="column">
+              <Grid item>
+                <KeyboardDatePicker format="MM/dd/yyyy" value={date} onChange={newDate => setDate(newDate)} />
+              </Grid>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
     </Grid>
+    </MuiPickersUtilsProvider>
   )
 
 }
