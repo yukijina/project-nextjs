@@ -39,6 +39,7 @@ export default function ProjectManager() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [name, setName] = useState('');
   const [date, setDate] = useState(new Date());
+  const [total, setTotal] = useState('')
 
   const [rows, setRows] = useState([
     createData("Ulon Mask", "11/2/19", "Websote", "E-commerce", "N/A", "N/A", "N/A", "$1500"),
@@ -166,7 +167,7 @@ export default function ProjectManager() {
           </Table>
         </TableContainer>
       </Grid>
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <Dialog fullWidth maxWidth="md" open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <Grid container justify="center">
           <Grid item>
             <Typography variant="h1" gutterBottom>
@@ -175,15 +176,34 @@ export default function ProjectManager() {
           </Grid>
         </Grid>
         <DialogContent>
-          <Grid container>
-            <Grid item container direction="column">
-              <Grid item>
-                <TextField label="Name" id="name" value={name} onChange={(event) => setName(event.targetvalue)} />
+          <Grid container justify="space-between">
+
+            <Grid item>
+              <Grid item container direction="column" sm>
+                <Grid item>
+                  <TextField label="Name" id="name" value={name} onChange={(event) => setName(event.targetvalue)} />
+                </Grid>
               </Grid>
             </Grid>
-            <Grid item container direction="column">
-              <Grid item>
-                <KeyboardDatePicker format="MM/dd/yyyy" value={date} onChange={newDate => setDate(newDate)} />
+
+            <Grid item>
+              <Grid item container direction="column" sm style={{ marginTop: 16 }}>
+                <Grid item>
+                  <KeyboardDatePicker format="MM/dd/yyyy" value={date} onChange={newDate => setDate(newDate)} />
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item>
+              <Grid item container direction="column" sm>
+                <Grid item>
+                  <TextField 
+                    InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
+                    value={total} 
+                    id="total" 
+                    label="Total" 
+                    onChange={e=> setTotal(e.target.value)} />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
