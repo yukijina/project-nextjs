@@ -99,6 +99,14 @@ export default createMuiTheme({
         borderWidth: 2
       }
     },
+    MuiSvgIcon: {
+      root: {
+        // select all
+        "&.MuiSelect-icon": {
+          fill: arcOrange
+        }
+      }
+    },
     //chagen class for MuiFormControlLabel-label
     MuiFormControlLabel: {
       label: {
