@@ -24,7 +24,8 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import Button from '@material-ui/core/Button';
+import { format } from 'date-fns';
 
 const useStyles = makeStyles(theme => ({
   service: {
@@ -32,6 +33,15 @@ const useStyles = makeStyles(theme => ({
   },
   users: {
     marginRight: 0
+  },
+  button: {
+    color: "fff",
+    backgroundColor: theme.palette.common.orange,
+    borderRadius: 50,
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: theme.palette.common.light,
+    }
   }
 }));
 
@@ -66,6 +76,12 @@ export default function ProjectManager() {
     createData("Gill Gates", "10/17/19", "Costom Software", "GPS, Push Notification, Users/Authentication, Filetransfer", "Medium","Web Application", "0-10", "$1600"),
     createData("Ateve Jobs", "2/3/19", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500"),
   ])
+
+  const addProject = () => {
+    setRows([...rows, createData(name, format(date, "MM/dd/yy"), service, features.join(", "), complexity, platforms.join(", "), users, total)])
+    setDialogOpen(false)
+
+  }
   
 
   return (
@@ -202,7 +218,7 @@ export default function ProjectManager() {
             <Grid item>
               <Grid item container direction="column" sm>
                 <Grid item>
-                  <TextField fullWidth label="Name" id="name" value={name} onChange={(event) => setName(event.targetvalue)} />
+                  <TextField fullWidth label="Name" id="name" value={name} onChange={(event) => setName(event.target.value)} />
                 </Grid>
                 <Grid item container direction="column" style={{ marginTop: "5em" }}>
                   <Grid item>
@@ -353,7 +369,7 @@ export default function ProjectManager() {
                     <Grid item style={{ marginTop: "5em"}}>
                       <Select 
                         labelId="features" 
-                        id="freatures" 
+                        id="features" 
                         multiple 
                         displayEmpty
                         MenuProps={{ style:{ zIndex: 1302 }}}
@@ -373,12 +389,17 @@ export default function ProjectManager() {
                     </Grid>
 
                   </Grid>
-                </Grid>
-
-                
+                </Grid>               
               </Grid>        
             </Grid>
-
+          </Grid>
+          <Grid container justify="center" style={{ marginTop: "3em"}}>
+            <Grid item>
+              <Button onClick={() => setDialogOpen(false)} color="primary" style={{ fontWeght: 300}}>Cancel</Button>
+              </Grid>
+              <Grid item>
+                <Button  onClick={addProject} variant="contained" className={classes.button}>Add Project +</Button>
+              </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
