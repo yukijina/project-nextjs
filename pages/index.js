@@ -79,8 +79,15 @@ export default function ProjectManager() {
 
   const addProject = () => {
     setRows([...rows, createData(name, format(date, "MM/dd/yy"), service, features.join(", "), complexity, platforms.join(", "), users, total)])
-    setDialogOpen(false)
-
+    setDialogOpen(false);
+    setName("");
+    setDate(new Date());
+    setTotal("");
+    setService("");
+    setComplexity("");
+    setUsers("");
+    setPlatforms([]);
+    setFeatures([]);
   }
   
 
@@ -398,7 +405,15 @@ export default function ProjectManager() {
               <Button onClick={() => setDialogOpen(false)} color="primary" style={{ fontWeght: 300}}>Cancel</Button>
               </Grid>
               <Grid item>
-                <Button  onClick={addProject} variant="contained" className={classes.button}>Add Project +</Button>
+                <Button  
+                  onClick={addProject} 
+                  variant="contained" 
+                  disabled={
+                    service === "Website" ? name.length === 0 || total.length === 0 || features.length === 0 : name.length === 0 || total.length === 0 || features.length === 0 || users.length === 0 || complexity.length === 0 || platforms.length === 0 || service.length === 0 
+                  } 
+                  className={classes.button}>
+                    Add Project +
+                </Button>
               </Grid>
           </Grid>
         </DialogContent>
