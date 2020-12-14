@@ -69,16 +69,28 @@ export default function ProjectManager() {
 
   const platformOptions = ["Web", "iOS", "Android"]
 
-  const featureOptions = ["Photos/Videos",  "GPS", "File Transfer", "Users/Authentication", "Biometrics" , "Push Notifications"]
+  let featureOptions = ["Photos/Videos",  "GPS", "File Transfer", "Users/Authentication", "Biometrics" , "Push Notifications"]
+
+  let websiteOptions = ["Basic", "Interactive", "E-Commerce"]
 
   const [rows, setRows] = useState([
-    createData("Ulon Mask", "11/2/19", "Websote", "E-commerce", "N/A", "N/A", "N/A", "$1500"),
+    createData("Ulon Mask", "11/2/19", "Website", "E-commerce", "N/A", "N/A", "N/A", "$1500"),
     createData("Gill Gates", "10/17/19", "Costom Software", "GPS, Push Notification, Users/Authentication, Filetransfer", "Medium","Web Application", "0-10", "$1600"),
     createData("Ateve Jobs", "2/3/19", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500"),
   ])
 
   const addProject = () => {
-    setRows([...rows, createData(name, format(date, "MM/dd/yy"), service, features.join(", "), complexity, platforms.join(", "), users, total)])
+    setRows([
+      ...rows, 
+      createData(
+        name, 
+        format(date, "MM/dd/yy"), 
+        service, 
+        features.join(", "), 
+        service === "Website" ? "N/A" : complexity, 
+        service === "Website" ? "N/A" : platforms.join(", "), 
+        service === "Website" ? "N/A" : users, `$${total}`
+        )])
     setDialogOpen(false);
     setName("");
     setDate(new Date());
@@ -236,7 +248,10 @@ export default function ProjectManager() {
                       aria-label="service" 
                       name="service" 
                       value={service} 
-                      onChange={e => setService(e.target.value)}
+                      onChange={e => {
+                        setService(e.target.value); 
+                        setFeatures([])
+                      }}
                     >
                       <FormControlLabel 
                         // classes -> overwrite material ui default (not use className)
@@ -262,6 +277,7 @@ export default function ProjectManager() {
 
                   <Grid item style={{ marginTop: "5em"}}>
                     <Select 
+                      disabled={service === "Website"}
                       labelId="platforms" 
                       id="platforms" 
                       multiple 
@@ -304,18 +320,21 @@ export default function ProjectManager() {
                       >
                         <FormControlLabel 
                           // classes -> overwrite material ui default (not use className)
+                          disabled={service === "Website"}
                           classes={{ label: classes.service }}
                           value="Low"
                           label="Low"
                           control={<Radio />} 
                         />
                         <FormControlLabel 
+                          disabled={service === "Website"}
                           classes={{ label: classes.service }}
                           value="Medium"
                           label="Medium"
                           control={<Radio />}
                         />
                         <FormControlLabel 
+                          disabled={service === "Website"}
                           classes={{ label: classes.service }}
                           value="High"
                           label="High"
@@ -353,18 +372,21 @@ export default function ProjectManager() {
                       >
                         <FormControlLabel 
                           // classes -> overwrite material ui default (not use className)
+                          disabled={service === "Website"}
                           classes={{ label: classes.service, root: classes.users }}
                           value="0-10"
                           label="0-10"
                           control={<Radio />} 
                         />
                         <FormControlLabel 
+                          disabled={service === "Website"}
                           classes={{ label: classes.service, root: classes.users }}
                           value="10-100"
                           label="10-100"
                           control={<Radio />}
                         />
                         <FormControlLabel 
+                          disabled={service === "Website"}
                           classes={{ label: classes.service, root: classes.users }}
                           value="100+"
                           label="100+"
@@ -384,6 +406,7 @@ export default function ProjectManager() {
                         renderValue={features.length > 0 ? undefined : () => "Features"}
                         value={features} 
                         onChange={e => setFeatures(e.target.value) }>
+                          {service === "Website" ? featureOptions = websiteOptions : null}
                           {featureOptions.map(option => 
                             <MenuItem
                               key={option}
@@ -409,7 +432,9 @@ export default function ProjectManager() {
                   onClick={addProject} 
                   variant="contained" 
                   disabled={
-                    service === "Website" ? name.length === 0 || total.length === 0 || features.length === 0 : name.length === 0 || total.length === 0 || features.length === 0 || users.length === 0 || complexity.length === 0 || platforms.length === 0 || service.length === 0 
+                    service === "Website" 
+                      ? name.length === 0 || total.length === 0 || features.length === 0 || features.length > 1 
+                      : name.length === 0 || total.length === 0 || features.length === 0 || users.length === 0 || complexity.length === 0 || platforms.length === 0 || service.length === 0 
                   } 
                   className={classes.button}>
                     Add Project +
