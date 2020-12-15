@@ -45,8 +45,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function createData(name, date, service, features, complexity, platforms, users, total) {
-  return { name, date, service ,features, complexity, platforms, users, total}
+function createData(name, date, service, features, complexity, platforms, users, total, search) {
+  return { name, date, service ,features, complexity, platforms, users, total, search }
 }
 
 export default function ProjectManager() {
@@ -66,6 +66,7 @@ export default function ProjectManager() {
   const [users, setUsers] = useState('');
   const [platforms, setPlatforms] = useState([]);
   const [features, setFeatures] = useState([]);
+  const [search, setSearch] = useState("");
 
   const platformOptions = ["Web", "iOS", "Android"]
 
@@ -74,9 +75,9 @@ export default function ProjectManager() {
   let websiteOptions = ["Basic", "Interactive", "E-Commerce"]
 
   const [rows, setRows] = useState([
-    createData("Ulon Mask", "11/2/19", "Website", "E-commerce", "N/A", "N/A", "N/A", "$1500"),
-    createData("Gill Gates", "10/17/19", "Costom Software", "GPS, Push Notification, Users/Authentication, Filetransfer", "Medium","Web Application", "0-10", "$1600"),
-    createData("Ateve Jobs", "2/3/19", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500"),
+    createData("Ulon Mask", "11/2/19", "Website", "E-commerce", "N/A", "N/A", "N/A", "$1500", true),
+    createData("Gill Gates", "10/17/19", "Costom Software", "GPS, Push Notification, Users/Authentication, Filetransfer", "Medium","Web Application", "0-10", "$1600", true),
+    createData("Ateve Jobs", "2/3/19", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500", true),
   ])
 
   const addProject = () => {
@@ -89,7 +90,8 @@ export default function ProjectManager() {
         features.join(", "), 
         service === "Website" ? "N/A" : complexity, 
         service === "Website" ? "N/A" : platforms.join(", "), 
-        service === "Website" ? "N/A" : users, `$${total}`
+        service === "Website" ? "N/A" : users, `$${total}`,
+        true
         )])
     setDialogOpen(false);
     setName("");
@@ -102,6 +104,24 @@ export default function ProjectManager() {
     setFeatures([]);
   }
   
+  // Find matching table from input value
+  const handleSearch = (e) => {
+    setSearch(e.target.value)
+    const rowData = rows.map(row => Object.values(row).filter(option => option !== true && option !==false));
+    
+    // get matched data with input value
+    const matches = rowData.map(row => row.map(option => option.toLowerCase().includes(e.target.value.toLowerCase())))
+    
+    const newRows = [...rows];
+    matches.map((row, index) => 
+      row.includes(true) 
+      ? newRows[index].search = true 
+      : newRows[index].search = false
+    )
+    
+    setRows[newRows];
+  }
+
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -112,6 +132,8 @@ export default function ProjectManager() {
       <Grid item>
         <TextField
           placeholder="Search proect details or create a new entry."
+          value={search}
+          onChange={handleSearch}
           style={{ width: "35em", marginLeft: "5em"}} 
           InputProps={{
             endAdornment: (
@@ -208,7 +230,7 @@ export default function ProjectManager() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => 
+              {rows.filter(row => row.search).map((row, index) => 
               <TableRow key={index}>
                 <TableCell align="center">{row.name}</TableCell>
                 <TableCell align="center">{row.date}</TableCell>
