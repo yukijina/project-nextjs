@@ -26,6 +26,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { format } from 'date-fns';
+import EnhanceTable from '../src/ui/EnhanceTable'
 
 const useStyles = makeStyles(theme => ({
   service: {
@@ -199,7 +200,8 @@ export default function ProjectManager() {
         </Grid>
       </Grid>
       <Grid item style={{ marginBottom: "15em"}}>
-        <TableContainer component={Paper} elevation={0}>
+        <EnhanceTable rows={rows} />
+        {/* <TableContainer component={Paper} elevation={0}>
           <Table>
             <TableHead>
               <TableRow>
@@ -243,7 +245,7 @@ export default function ProjectManager() {
               </TableRow>)}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
       </Grid>
       <Dialog fullWidth maxWidth="md" open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <Grid container justify="center">
