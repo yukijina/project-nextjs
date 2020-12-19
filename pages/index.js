@@ -68,6 +68,7 @@ export default function ProjectManager() {
   const [platforms, setPlatforms] = useState([]);
   const [features, setFeatures] = useState([]);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(0);
 
   const platformOptions = ["Web", "iOS", "Android"]
 
@@ -79,6 +80,9 @@ export default function ProjectManager() {
     createData("Ulon Mask", "11/2/19", "Website", "E-commerce", "N/A", "N/A", "N/A", "$1500", true),
     createData("Gill Gates", "10/17/19", "Costom Software", "GPS, Push Notification, Users/Authentication, Filetransfer", "Medium","Web Application", "0-10", "$1600", true),
     createData("Ateve Jobs", "2/3/19", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500", true),
+    createData("Kteve Jobs", "2/3/20", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500", true),
+    createData("Jon Beck", "2/3/20", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500", true),
+    createData("Elbert Ainshtain", "2/3/20", "Custom Software", "Photo/Video, File Transfer, User/Authentication", "Low", "Web Apprecation", "0-100", "$1500", true),
   ])
 
   const addProject = () => {
@@ -121,6 +125,7 @@ export default function ProjectManager() {
     )
     
     setRows[newRows];
+    setPage(0)
   }
 
 
@@ -193,8 +198,8 @@ export default function ProjectManager() {
           />
         </FormGroup>
       </Grid>
-      <Grid item style={{ marginTop: "5em", marginBottom: "15em"}}>
-        <EnhanceTable rows={rows} />
+      <Grid item style={{ marginTop: "5em", marginBottom: "35em"}}>
+        <EnhanceTable rows={rows} page={page} setPage={setPage} />
         {/* <TableContainer component={Paper} elevation={0}>
           <Table>
             <TableHead>
