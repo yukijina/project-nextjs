@@ -199,7 +199,15 @@ export default function ProjectManager() {
         </FormGroup>
       </Grid>
       <Grid item style={{ marginTop: "5em", marginBottom: "35em"}}>
-        <EnhanceTable rows={rows} page={page} setPage={setPage} />
+        <EnhanceTable 
+          rows={rows} 
+          page={page} 
+          setPage={setPage}
+          websiteChecked={websiteChecked}
+          iOSChecked={iOSChecked}
+          androidChecked={androidChecked}
+          softwareChecked={softwareChecked}
+          />
         {/* <TableContainer component={Paper} elevation={0}>
           <Table>
             <TableHead>
