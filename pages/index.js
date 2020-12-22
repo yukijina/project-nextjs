@@ -26,7 +26,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { format } from 'date-fns';
-import EnhanceTable from '../src/ui/EnhanceTable'
+import EnhanceTable from '../src/ui/EnhanceTable';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles(theme => ({
   service: {
@@ -69,6 +70,8 @@ export default function ProjectManager() {
   const [features, setFeatures] = useState([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const platformOptions = ["Web", "iOS", "Android"]
 
@@ -131,8 +134,8 @@ export default function ProjectManager() {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <Grid container direction="column">
-      <Grid item style={{ marginTop: "2em", marginLeft: "5em"}}>
+    <Grid container direction="column" alignItems={matchesSM ? "center": undefined}>
+      <Grid item style={{ marginTop: "2em", marginLeft: matchesSM ? 0 : "5em"}}>
         <Typography variant="h1">Projects</Typography>
       </Grid>
       <Grid item>
@@ -140,7 +143,7 @@ export default function ProjectManager() {
           placeholder="Search proect details or create a new entry."
           value={search}
           onChange={handleSearch}
-          style={{ width: "35em", marginLeft: "5em"}} 
+          style={{ width: matchesSM ? "25em" : "35em", marginLeft: matchesSM ? 0 : "5em"}} 
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" onClick={() => setDialogOpen(true)} style={{ cursor: "pointer" }}>
@@ -150,55 +153,65 @@ export default function ProjectManager() {
           }}
         />
       </Grid>
-      <Grid item style={{ marginLeft: "5em", marginTop: "2em"}}>
+      <Grid item style={{ marginLeft: matchesSM ? 0 : "5em", marginTop: "2em"}}>
         <FormGroup row>
-          <FormControlLabel 
-            style={{ marginRight: "5em "}}
-            control={
-              <Switch
-                checked={websiteChecked}
-                color="primary"
-                onChange={() => setWebsiteChecked(!websiteChecked)}
-              />}
-            label="website" 
-            labelPlacement="start"
-          />
-          <FormControlLabel 
-            style={{ marginRight: "5em "}}
-            control={
-              <Switch
-                checked={iOSChecked}
-                color="primary"
-                onChange={() => setIOSChecked(!iOSChecked)}
-              />}
-            label="iOS Apps" 
-            labelPlacement="start"
-          />
-          <FormControlLabel 
-            style={{ marginRight: "5em "}}
-            control={
-              <Switch
-                checked={androidChecked}
-                color="primary"
-                onChange={() => setAndroidChecked(!androidChecked)}
-              />}
-            label="android Apps" 
-            labelPlacement="start"
-          />
-          {/* Last element, we don't need margin right */}
-          <FormControlLabel 
-            control={
-              <Switch
-                checked={softwareChecked}
-                color="primary"
-                onChange={() => setSoftwareChecked(!softwareChecked)}
-              />}
-            label="Custom Software" 
-            labelPlacement="start"
-          />
-        </FormGroup>
+          <Grid container direction={matchesSM ? "column" : "row"} justify={matchesSM ? "center" : undefined }>
+            <Grid item>
+              <FormControlLabel 
+                style={{ marginRight: matchesSM ? 0 : "5em "}}
+                control={
+                  <Switch
+                    checked={websiteChecked}
+                    color="primary"
+                    onChange={() => setWebsiteChecked(!websiteChecked)}
+                  />}
+                label="website" 
+                labelPlacement={matchesSM ? "end" : "start"}
+              />
+            </Grid>
+            <Grid item>
+              <FormControlLabel 
+                style={{ marginRight: matchesSM ? 0 : "5em "}}
+                control={
+                  <Switch
+                    checked={iOSChecked}
+                    color="primary"
+                    onChange={() => setIOSChecked(!iOSChecked)}
+                  />}
+                label="iOS Apps" 
+                labelPlacement={matchesSM ? "end" : "start"}
+             />
+            </Grid>
+            <Grid item>
+              <FormControlLabel 
+                style={{ marginRight: matchesSM ? 0 : "5em "}}
+                control={
+                  <Switch
+                    checked={androidChecked}
+                    color="primary"
+                    onChange={() => setAndroidChecked(!androidChecked)}
+                  />}
+                label="android Apps" 
+                labelPlacement={matchesSM ? "end" : "start"}
+              />
+            </Grid>
+            <Grid item>
+             {/* Last element, we don't need margin right */}
+            <FormControlLabel 
+              control={
+                <Switch
+                  checked={softwareChecked}
+                  color="primary"
+                  onChange={() => setSoftwareChecked(!softwareChecked)}
+                />}
+              label="Custom Software" 
+              labelPlacement={matchesSM ? "end" : "start"}
+            />
+            </Grid>
+          </Grid>    
+         </FormGroup>    
       </Grid>
-      <Grid item style={{ marginTop: "5em", marginBottom: "35em"}}>
+      <Grid item style={{ marginTop: "5em", maxWidth: "100%", marginBottom: matchesMD ? "40em" : "35em"}}>
         <EnhanceTable 
           rows={rows} 
           page={page} 
