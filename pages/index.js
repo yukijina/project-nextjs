@@ -29,6 +29,7 @@ import { format } from 'date-fns';
 import EnhanceTable from '../src/ui/EnhanceTable';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+
 const useStyles = makeStyles(theme => ({
   service: {
     fontWeight: 300
@@ -267,7 +268,14 @@ export default function ProjectManager() {
           </Table>
         </TableContainer> */}
       </Grid>
-      <Dialog fullWidth maxWidth="md" open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <Dialog 
+        fullWidth 
+        maxWidth="md" 
+        open={dialogOpen} 
+        onClose={() => setDialogOpen(false)} 
+        fullScreen={matchesSM}
+        style={{ zIndex: 1302}}
+      >
         <Grid container justify="center">
           <Grid item>
             <Typography variant="h1" gutterBottom>
@@ -277,13 +285,13 @@ export default function ProjectManager() {
         </Grid>
 
         <DialogContent>
-          <Grid container justify="space-between">
+          <Grid container justify="space-between" direction={matchesSM ? "column": "row"}>
             <Grid item>
-              <Grid item container direction="column" sm>
+              <Grid item container direction="column" sm alignItems={matchesSM ? "center": undefined}alignItems={matchesSM ? "center": undefined}>
                 <Grid item>
-                  <TextField fullWidth label="Name" id="name" value={name} onChange={(event) => setName(event.target.value)} />
+                  <TextField fullWidth={!matchesSM} label="Name" id="name" value={name} onChange={(event) => setName(event.target.value)} />
                 </Grid>
-                <Grid item container direction="column" style={{ marginTop: "5em" }}>
+                <Grid item container direction="column" style={{ marginTop: matchesSM ? 50 : "5em" }} alignItems={matchesSM ? "center": undefined}>
                   <Grid item>
                     <Typography variant="h4">Service</Typography>
                   </Grid>
@@ -319,7 +327,7 @@ export default function ProjectManager() {
                     </RadioGroup>
                   </Grid>
 
-                  <Grid item style={{ marginTop: "5em"}}>
+                  <Grid item style={{ marginTop: matchesSM ? 50 : "5em"}}>
                     <Select 
                       disabled={service === "Website"}
                       labelId="platforms" 
@@ -345,7 +353,7 @@ export default function ProjectManager() {
             </Grid>
 
             <Grid item>
-              <Grid item container direction="column" alignItems="center" sm style={{ marginTop: 16 }}>
+              <Grid item container direction="column" alignItems={matchesSM ? "center": undefined} sm style={{ marginTop: 16 }}>
                 <Grid item>
                   <KeyboardDatePicker format="MM/dd/yyyy" value={date} onChange={newDate => setDate(newDate)} />
                 </Grid>
@@ -392,8 +400,8 @@ export default function ProjectManager() {
             </Grid>
 
             <Grid item>
-              <Grid item container direction="column" sm alignItems="flex-end">
-                <Grid item>
+              <Grid item container direction="column" sm alignItems="flex-end" alignItems={matchesSM ? "center": undefined}>
+                <Grid item style={{marginTop: matchesSM ? 50 : null}}>
                   <TextField 
                     InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
                     value={total} 
@@ -403,7 +411,7 @@ export default function ProjectManager() {
                   />
                 </Grid>
                 <Grid item>
-                  <Grid item container direction="column" style={{ marginTop: "5em" }}>
+                  <Grid item container direction="column" style={{ marginTop: "5em" }} alignItems={matchesSM ? "center": undefined}>
                     <Grid item>
                       <Typography variant="h4">Users</Typography>
                     </Grid>
@@ -439,7 +447,7 @@ export default function ProjectManager() {
                       </RadioGroup>
                     </Grid>
 
-                    <Grid item style={{ marginTop: "5em"}}>
+                    <Grid item style={{ marginTop: matchesSM ? 0 : "5em"}}>
                       <Select 
                         labelId="features" 
                         id="features" 
